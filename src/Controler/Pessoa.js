@@ -71,13 +71,18 @@ export async function selectUsuario(req, res){
 export async function deleteUsuario(req, res){
     try{
         let id = req.body.id;
+
+        if(id == 1){
+            return res.status(403).json({message: 'Não é permitido deletar o esse usuario'});
+        }else{
             openDb().then(db=>{
-            db.get('DELETE FROM Usuarios WHERE id = ?', [id])
-            .then(user=>res.json(user));
-        });
-        res.json({
-            "statuscode": 200
-        });     
+                db.get('DELETE FROM Usuarios WHERE id = ?', [id])
+                .then(user=>res.json(user));
+            });
+            res.json({
+                "statuscode": 200
+            });     
+        }
     }catch(err){
         console.log(mensagem= "Erro ao selecionar usuários: " + err.message);
     }
