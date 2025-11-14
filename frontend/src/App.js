@@ -1,44 +1,24 @@
 import React, {useState} from "react";
 
-const API_URL = 'http://localhost:3001/user';
+const API_URL = 'http://localhost:3001/users';
 
-function FiltrarUsuario() {
-
-   const [formData, setFormData] = useState({
-      id: '',
-    });//Enviar os dados do formulário
+function TodosUsuarios() {
     const [mensagem, setMensagem] = useState('');//Informar o status da operação
 
-    const handleChange = (e) => {
-      const { id, value } = e.target;//destruir o evento
-      setFormData(prevData => ({//atualizar o estado
-        ...prevData,//copiar os dados anteriores
-        [id]: value,//atualizar o campo alterado
-      }));
-    };
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();//evita que a página seja recarregada
+    const handleSubmit = async () => {
       setMensagem('Enviando dados para o endpoint...');//atualiza a mensagem
 
-      const userId = formData.id;//pega o id
-    
-      const urlBusca = `${API_URL}/${userId}`;//cria um novo url
 
       try {
-        const response = await fetch(urlBusca, {//envia a requisição para o endpoint
+        const response = await fetch(API_URL, {//envia a requisição para o endpoint
           method: 'GET',//metodo que está sendo usado
-          
-          
         });
 
         if (response.ok) {//Verifica se a resposta foi bem-sucedida
           const result = await response.json();//Mensagem de resposta
           if (result.statuscode === 200) {//Verifica se deu certo
               setMensagem(`Usuário encontrado: ${JSON.stringify(result.data)}`);//Mostra os dados do usuário
-              setFormData({//Limpa o formulário
-                id: '',
-              });
           } else {
                setMensagem(` Erro interno: Código ${result.statuscode}`);//mostra o erro
           }  
@@ -56,16 +36,15 @@ function FiltrarUsuario() {
       <div style={{ padding: '20px', maxWidth: '400px', margin: 'auto' }}>
         <h3>Filtrar Usuário por ID </h3>
         
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <label>ID: <input type="text" id="id" value={formData.id} onChange={handleChange} required /></label>
-          
-          <button type="submit" style={{ padding: '10px', backgroundColor: '#4CAF50', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
-            Buscar Usuário
-          </button>
-        </form>
+        <button 
+        type="button" // Use type="button" ou remova
+        onClick={handleSubmit} // Use onClick em vez de onSubmit
+        style={{ padding: '10px', backgroundColor: '#4CAF50', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
+        Buscar Usuários
+      </button>
         
         {mensagem && <p style={{ marginTop: '20px' }}>{mensagem}</p>}
       </div>
     )
 }
-export default FiltrarUsuario;//exporta o componente
+export default TodosUsuarios;//exporta o componente

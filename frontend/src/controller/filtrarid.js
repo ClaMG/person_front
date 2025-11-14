@@ -21,9 +21,14 @@ function FiltrarUsuario() {
       e.preventDefault();//evita que a página seja recarregada
       setMensagem('Enviando dados para o endpoint...');//atualiza a mensagem
 
+      const userId = formData.id;//pega o id
+    
+      const urlBusca = `${API_URL}/${userId}`;//cria um novo url
+
       try {
-        const response = await fetch(API_URL, {//envia a requisição para o endpoint
+        const response = await fetch(urlBusca, {//envia a requisição para o endpoint
           method: 'GET',//metodo que está sendo usado
+          
           
         });
 
