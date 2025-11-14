@@ -20,7 +20,7 @@ router.get('/users', selectUsuarios);//Leitura de todas as pessoas
 router.get('/user/:id', selectUsuario);//Leitura de uma pessoa pelo id
 router.put('/user', authToken, updateUsuario);//Atualização dos dados de uma pessoa
 router.post('/user', insertUsuario);//Inserção de uma nova pessoa
-router.delete('/user', authToken, deleteUsuario);//Deleção de uma pessoa
+router.delete('/user/:id', deleteUsuario);//Deleção de uma pessoa
 router.get('/protected',authToken, autorizarUser);//Rota protegida
 router.post('/login', logar);//Rota de login
 

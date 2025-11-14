@@ -22,4 +22,4 @@ https.createServer({
     cert: fs.readFileSync('src/SSL/code.crt'),
     key: fs.readFileSync('src/SSL/code.key')
 
-}, app).listen(3004, ()=>console.log("Api Rodando em HTTPS."))
+}, app).listen(3002, ()=>console.log("Api Rodando em HTTPS."))

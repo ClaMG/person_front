@@ -49,7 +49,7 @@ export async function selectUsuarios(req, res){
     try{
         openDb().then(db=>{
             db.all('SELECT * FROM Usuarios')
-            .then(users=>res.json(users))
+            .then(users=>res.status(200).json(users))
         });
     }catch(err){
         console.log(mensagem= "Erro ao selecionar usuários: " + err.message);
@@ -82,7 +82,11 @@ export async function selectUsuario(req, res){
 
 export async function deleteUsuario(req, res){
     try{
-        let id = req.body.id;
+         let id = req.params.id; 
+
+        if (!id) {
+            return res.status(400).json({ error: "ID do usuário não fornecido." });
+        }//testar se esta vindo o id
 
         if(id == 1){
             return res.status(403).json({message: 'Não é permitido deletar o esse usuario'});
