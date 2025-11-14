@@ -1,2 +1,1 @@
-# react_test
-# person_front_back
+# person_front
