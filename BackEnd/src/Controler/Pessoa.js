@@ -58,13 +58,25 @@ export async function selectUsuarios(req, res){
 
 export async function selectUsuario(req, res){
     try{
-        let id = req.body.id;
-            openDb().then(db=>{
+        let id = req.params.id; 
+
+        if (!id) {
+            return res.status(400).json({ error: "ID do usuário não fornecido." });
+        }//testar se esta vindo o id
+
+        openDb().then(db=>{
             db.get('SELECT * FROM Usuarios WHERE id = ?', [id])
-            .then(user=>res.json(user));
+            .then(user => {//define se deu certo ou errado
+                if (user) {
+                    res.status(200).json({ statuscode: 200, data: user });
+                } else {
+                    res.status(404).json({ error: "Usuário não encontrado.", statuscode: 404 });
+                }
+            })
         });
     }catch(err){
-        console.log(mensagem= "Erro ao selecionar usuários: " + err.message);
+        console.log("Erro ao selecionar usuários (Catch): " + err.message);
+        res.status(500).json({ error: "Erro interno do servidor." });
     }
 }
 
