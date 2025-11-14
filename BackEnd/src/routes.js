@@ -16,12 +16,12 @@ router.get('/', (req, res) => {
 
 
 
-router.get('/users', selectUsuarios);//Leitura de todas as pessoas
-router.get('/user/:id', selectUsuario);//Leitura de uma pessoa pelo id
-router.put('/user', authToken, updateUsuario);//Atualização dos dados de uma pessoa
-router.post('/user', insertUsuario);//Inserção de uma nova pessoa
-router.delete('/user/:id', deleteUsuario);//Deleção de uma pessoa
+router.get('/users', selectUsuarios);//Leitura de todas as pessoas//feito
+router.get('/user/:id', selectUsuario);//Leitura de uma pessoa pelo id//feito
+router.put('/user', updateUsuario);//Atualização dos dados de uma pessoa
+router.post('/user', insertUsuario);//Inserção de uma nova pessoa//feito
+router.delete('/user/:id', deleteUsuario);//Deleção de uma pessoa//feito
 router.get('/protected',authToken, autorizarUser);//Rota protegida
-router.post('/login', logar);//Rota de login
+router.post('/login/:user', logar);//Rota de login
 
 export default router;

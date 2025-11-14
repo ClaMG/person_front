@@ -32,7 +32,12 @@ export async function insertUsuario(req, res){
 
 export async function updateUsuario(req, res){
     try{
-        let user = req.body;
+         let id = req.params.id; 
+
+        if (!id) {
+            return res.status(400).json({ error: "ID do usuário não fornecido." });
+        }//testar se esta vindo o id
+
         openDb().then(db=>{
             db.run('UPDATE Usuarios SET usuario=?, senha=?, nome = ?, idade = ?, cpf=?, telefone=?, email=? WHERE id = ?', [user.usuario, user.senha, user.nome, user.idade, user.cpf, user.telefone, user.email, user.id]);
         });
@@ -123,7 +128,8 @@ async function getUserByUsername(username) {
 
 export async function logar(req, res){
     const secretKey = process.env.JWT_SECRET || 'secretayour_super_secret_key_here';
-    const {username, password} = req.body;
+    const {username} = req.params.usuario;
+    const{password} = req.params.senha
     
     const user = await getUserByUsername(username); //usa a função e manda o usuario para verificação
 
@@ -144,6 +150,10 @@ export async function logar(req, res){
     if (!secretKey) {
         console.error('JWT_SECRET not defined in .env');
         return res.status(500).json({message: 'Erro interno do servidor' });
+    }
+
+    if(passwordMatch && user){
+        return res.status(200).json({message: 'deu certo' });
     }
 
     const payload = {id: user.id};
